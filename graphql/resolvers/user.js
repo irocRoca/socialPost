@@ -9,8 +9,7 @@ const genToken = user => {
   return jwt.sign(
     {
       id: user.id,
-      userName: user.userName,
-      email: user.email
+      userName: user.userName
     },
     JWT_SECRET,
     { expiresIn: "1hr" }

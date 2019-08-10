@@ -4,6 +4,7 @@ const postSchema = mongoose.Schema({
   body: String,
   userName: String,
   createdAt: String,
+  userId: String,
   comments: [
     {
       body: String,
@@ -13,15 +14,9 @@ const postSchema = mongoose.Schema({
   ],
   likes: [
     {
-      userName: String,
-      createdAt: String
+      userName: String
     }
   ]
-  // ,
-  // user: {
-  //   type: schema.type.objectid,
-  //   ref: "users"
-  // }
 });
 
 module.exports = mongoose.model("post", postSchema);
