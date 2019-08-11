@@ -1,5 +1,5 @@
 const Post = require("../../models/Post");
-const verifyAuth = require("../../verifyAuth");
+const verifyAuth = require("../../util/verifyAuth");
 
 const resolvers = {
   Query: {
