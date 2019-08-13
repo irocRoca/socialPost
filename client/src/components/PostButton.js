@@ -18,7 +18,7 @@ const PostButton = props => {
             {/* Later receive props for like count */}2
           </Label>
         </Button>
-        <Button as="div" labelPosition="right" as={Link} to="/post">
+        <Button labelPosition="right" as={Link} to="/post">
           <Button basic color="blue">
             <Icon name="comments" />
             Comment

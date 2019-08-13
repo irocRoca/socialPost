@@ -1,7 +1,74 @@
-import React from "react";
-import { Form, Segment, Container, Button, Icon } from "semantic-ui-react";
+import React, { useState } from "react";
+import {
+  Form,
+  Segment,
+  Container,
+  Button,
+  Icon,
+  Message
+} from "semantic-ui-react";
+import gql from "graphql-tag";
+import { useMutation } from "@apollo/react-hooks";
 
-const Register = () => {
+const REGISTER_USER = gql`
+  mutation register(
+    $userName: String!
+    $email: String!
+    $password: String!
+    $confirmPassword: String!
+  ) {
+    register(
+      registerInput: {
+        userName: $userName
+        email: $email
+        password: $password
+        confirmPassword: $confirmPassword
+      }
+    ) {
+      id
+      token
+      userName
+      email
+    }
+  }
+`;
+
+const Register = props => {
+  const [errors, setErrors] = useState({});
+  const [values, setValues] = useState({
+    userName: "",
+    email: "",
+    password: "",
+    confirmPassword: ""
+  });
+
+  const [registerUser, { loading }] = useMutation(REGISTER_USER, {
+    update(proxy, result) {
+      console.log(result, "result");
+      // Store user Token
+      localStorage.setItem("token", result.data.login.token);
+      props.history.push("/");
+    },
+    variables: values,
+    onError(err) {
+      console.log(err.graphQLErrors[0].extensions.exception);
+      if (err.graphQLErrors[0].extensions.exception.errors) {
+        setErrors(err.graphQLErrors[0].extensions.exception.errors);
+      } else {
+        setErrors(err.graphQLErrors[0].extensions.exception.errors);
+      }
+    }
+  });
+
+  const onChange = e => {
+    setValues({ ...values, [e.target.name]: e.target.value });
+  };
+
+  const onSubmit = e => {
+    e.preventDefault();
+    registerUser();
+  };
+
   return (
     <div>
       <Container text>
@@ -12,9 +79,15 @@ const Register = () => {
             <Icon name="user" />
             Register
           </div>
-
-          <Form>
-            <Form.Group widths="equal">
+          {errors.message ? (
+            <Message error header="Invalid Username" content={errors.message} />
+          ) : null}
+          <Form
+            onSubmit={onSubmit}
+            noValidate
+            className={loading ? "loading" : ""}
+          >
+            {/* <Form.Group widths="equal">
               <Form.Input
                 fluid
                 label="First name"
@@ -29,19 +102,27 @@ const Register = () => {
                 placeholder="Last name"
                 required
               />
-            </Form.Group>
+            </Form.Group> */}
             <Form.Group widths="equal">
               <Form.Input
                 fluid
                 label="Username"
+                name="userName"
+                onChange={onChange}
+                value={values.userName}
                 placeholder="Enter Username"
+                error={errors.userName && errors.userName}
                 required
               />
               <Form.Input
                 fluid
                 type="email"
                 label="Email"
+                name="email"
                 placeholder="Email Address"
+                onChange={onChange}
+                value={values.email}
+                error={errors.email && errors.email}
                 required
               />
             </Form.Group>
@@ -50,21 +131,27 @@ const Register = () => {
                 fluid
                 type="password"
                 label="Password"
+                name="password"
                 placeholder="Password"
+                onChange={onChange}
+                error={errors.password && errors.password}
                 required
               />
               <Form.Input
                 fluid
                 type="password"
+                name="confirmPassword"
                 label="Confrim Password"
                 placeholder="Confirm Password"
+                onChange={onChange}
+                error={errors.confirmPassword && errors.confirmPassword}
                 required
               />
             </Form.Group>
-            <Form.Checkbox
+            {/* <Form.Checkbox
               required
               label="I agree to the Terms and Conditions"
-            />
+            /> */}
             <Button
               primary
               fluid

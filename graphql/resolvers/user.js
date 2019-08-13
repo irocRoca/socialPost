@@ -20,18 +20,20 @@ module.exports = {
   Mutation: {
     login: async (_, { userName, password }) => {
       const { isValid, errors } = loginValidate(userName, password);
+      console.log(userName, password);
+      console.log(errors);
       if (!isValid) {
-        throw new UserInputError("Error", errors);
+        throw new UserInputError("Errors", { errors });
       }
       const user = await User.findOne({ userName });
       if (!user) {
         errors.message = "User not found";
-        throw new UserInputError("Invalid user", errors);
+        throw new UserInputError("Invalid user");
       }
       const match = await bcrypt.compare(password, user.password);
       if (!match) {
-        errors.message = "Wrong Crendetials";
-        throw new UserInputError("Invalid Password", errors);
+        errors.message = "Invalid Username or Password";
+        throw new UserInputError("Errors", { errors });
       }
 
       const token = genToken(user);
@@ -53,15 +55,15 @@ module.exports = {
         password,
         confirmPassword
       );
+      console.log(errors);
       if (!isValid) {
-        throw new UserInputError("Errors", errors);
+        throw new UserInputError("Errors", { errors });
       }
 
       const verifyUser = await User.findOne({ userName });
       if (verifyUser) {
-        throw new UserInputError("Username taken", {
-          error: { userName: "Username already taken" }
-        });
+        errors.message = "Username unavailable";
+        throw new UserInputError("Errors", { errors });
       }
       let salt = bcrypt.genSaltSync(10);
       let hash = bcrypt.hashSync(password, salt);
