@@ -2,7 +2,6 @@ import React from "react";
 import { Card, Image } from "semantic-ui-react";
 import PostButton from "./PostButton";
 import moment from "moment";
-import { create } from "domain";
 
 const Post = props => {
   const { id, body, userName, createdAt } = props.data;
@@ -21,7 +20,7 @@ const Post = props => {
         <Card.Description>{body}</Card.Description>
       </Card.Content>
       <Card.Content extra>
-        <PostButton />
+        <PostButton id={id} />
       </Card.Content>
       {props.children}
     </Card>

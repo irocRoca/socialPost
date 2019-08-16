@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Form, Segment, Button, Icon, Message } from "semantic-ui-react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
+import { useDispatch } from "react-redux";
+import { loginUser as loggingIn } from "../actions";
 
 const USER_LOGIN = gql`
   mutation login($userName: String!, $password: String!) {
@@ -20,12 +22,19 @@ const Login = props => {
     userName: "",
     password: ""
   });
+  // grab user from redux const userData = useSelector(data => console.log(data));
+  // Also import UseSelector
+
+  const dispatch = useDispatch();
 
   const [loginUser, { loading }] = useMutation(USER_LOGIN, {
-    update(proxy, result) {
-      console.log(result, "result");
-      // Store user Token
-      localStorage.setItem("token", result.data.login.token);
+    update(
+      _,
+      {
+        data: { login: data }
+      }
+    ) {
+      dispatch(loggingIn(data));
       props.history.push("/");
     },
     variables: values,

@@ -1,7 +1,6 @@
 import React from "react";
 import Post from "../components/Post";
 import Profile from "../components/Profile";
-import Comments from "../components/Comments";
 import gql from "graphql-tag";
 import { Grid } from "semantic-ui-react";
 import { useQuery } from "@apollo/react-hooks";
@@ -26,7 +25,7 @@ const Home = () => {
 
   return (
     <div>
-      <Grid centered>
+      <Grid centered className={loading ? "loading" : ""}>
         <Grid.Row>
           <Grid.Column only="computer" computer={5}>
             <Profile />

@@ -1,14 +1,14 @@
 import { LOGIN_USER, LOGOUT_USER } from "../actions/constants";
 
-const initalState = { user: null };
+const initalState = null;
 
 const userAuth = (state = initalState, action) => {
   switch (action.type) {
     case LOGIN_USER:
-      state.user = action.payload;
+      state = action.payload;
       return state;
     case LOGOUT_USER:
-      state.user = null;
+      state = null;
       return state;
     default:
       return state;
