@@ -7,7 +7,9 @@ import { createHttpLink } from "apollo-link-http";
 import { ApolloProvider } from "@apollo/react-hooks";
 import { setContext } from "apollo-link-context";
 
-const httpLink = createHttpLink({ uri: "http://localhost:5000" });
+const httpLink = createHttpLink({
+  uri: "https://socialtwi.herokuapp.com"
+});
 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem("token");
