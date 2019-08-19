@@ -1,13 +1,16 @@
 import React from "react";
 import { Card, Image, List } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 
-const Profile = () => {
+const ProfileInfo = () => {
   return (
     <div>
       <Card>
         <Card.Content>
           <Card.Header textAlign="center">
             <Image
+              as={Link}
+              to="/profile"
               style={{ padding: "1rem" }}
               size="small"
               circular
@@ -39,4 +42,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default ProfileInfo;

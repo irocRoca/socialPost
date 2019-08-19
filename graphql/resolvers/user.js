@@ -20,15 +20,13 @@ module.exports = {
   Mutation: {
     login: async (_, { userName, password }) => {
       const { isValid, errors } = loginValidate(userName, password);
-      console.log(userName, password);
-      console.log(errors);
       if (!isValid) {
         throw new UserInputError("Errors", { errors });
       }
       const user = await User.findOne({ userName });
       if (!user) {
-        errors.message = "User not found";
-        throw new UserInputError("Invalid user");
+        errors.message = "Invalid Username or Password";
+        throw new UserInputError("Errors", { errors });
       }
       const match = await bcrypt.compare(password, user.password);
       if (!match) {
@@ -55,7 +53,6 @@ module.exports = {
         password,
         confirmPassword
       );
-      console.log(errors);
       if (!isValid) {
         throw new UserInputError("Errors", { errors });
       }

@@ -27,6 +27,9 @@ const resolvers = {
   Mutation: {
     createPost: async (_, { body }, context) => {
       const user = verifyAuth(context);
+      if (body.trim() === "") {
+        throw new Error("Body cannot be empty");
+      }
       const newPost = new Post({
         body,
         userName: user.userName,

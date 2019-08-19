@@ -7,31 +7,8 @@ import {
   Icon,
   Message
 } from "semantic-ui-react";
-import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
-
-const REGISTER_USER = gql`
-  mutation register(
-    $userName: String!
-    $email: String!
-    $password: String!
-    $confirmPassword: String!
-  ) {
-    register(
-      registerInput: {
-        userName: $userName
-        email: $email
-        password: $password
-        confirmPassword: $confirmPassword
-      }
-    ) {
-      id
-      token
-      userName
-      email
-    }
-  }
-`;
+import { REGISTER_USER } from "../util/graphql/user";
 
 const Register = props => {
   const [errors, setErrors] = useState({});
@@ -51,10 +28,7 @@ const Register = props => {
     },
     variables: values,
     onError(err) {
-      console.log(err.graphQLErrors[0].extensions.exception);
       if (err.graphQLErrors[0].extensions.exception.errors) {
-        setErrors(err.graphQLErrors[0].extensions.exception.errors);
-      } else {
         setErrors(err.graphQLErrors[0].extensions.exception.errors);
       }
     }

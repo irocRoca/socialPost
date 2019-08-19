@@ -16,7 +16,9 @@ const postSchema = mongoose.Schema({
     {
       userName: String
     }
-  ]
+  ],
+  likeCount: { type: Number, default: 0 },
+  commentCount: { type: Number, default: 0 }
 });
 
 module.exports = mongoose.model("post", postSchema);

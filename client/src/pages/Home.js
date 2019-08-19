@@ -1,23 +1,14 @@
 import React from "react";
 import Post from "../components/Post";
-import Profile from "../components/Profile";
-import gql from "graphql-tag";
+import ProfileInfo from "../components/ProfileInfo";
+import AddPost from "../components/AddPost";
+import { GET_POSTS } from "../util/graphql/post";
 import { Grid } from "semantic-ui-react";
 import { useQuery } from "@apollo/react-hooks";
-
-const GET_POSTS = gql`
-  {
-    getPosts {
-      id
-      body
-      userName
-      createdAt
-      userId
-    }
-  }
-`;
+import { useSelector } from "react-redux";
 
 const Home = () => {
+  const user = useSelector(state => state.userData);
   const {
     loading,
     data: { getPosts: posts }
@@ -28,12 +19,11 @@ const Home = () => {
       <Grid centered className={loading ? "loading" : ""}>
         <Grid.Row>
           <Grid.Column only="computer" computer={5}>
-            <Profile />
+            <ProfileInfo />
           </Grid.Column>
           <Grid.Column mobile={16} tablet={12} computer={7}>
-            <Grid.Row>
-              {posts && posts.map(item => <Post data={item} key={item.id} />)}
-            </Grid.Row>
+            <Grid.Row>{user && <AddPost />}</Grid.Row>
+            {posts && posts.map(item => <Post data={item} key={item.id} />)}
           </Grid.Column>
         </Grid.Row>
       </Grid>

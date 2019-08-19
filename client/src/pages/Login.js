@@ -1,20 +1,10 @@
 import React, { useState } from "react";
 import { Form, Segment, Button, Icon, Message } from "semantic-ui-react";
-import gql from "graphql-tag";
+
 import { useMutation } from "@apollo/react-hooks";
 import { useDispatch } from "react-redux";
 import { loginUser as loggingIn } from "../actions";
-
-const USER_LOGIN = gql`
-  mutation login($userName: String!, $password: String!) {
-    login(userName: $userName, password: $password) {
-      id
-      token
-      userName
-      email
-    }
-  }
-`;
+import { USER_LOGIN } from "../util/graphql/user";
 
 const Login = props => {
   const [errors, setErrors] = useState({});
@@ -40,8 +30,6 @@ const Login = props => {
     variables: values,
     onError(err) {
       if (err.graphQLErrors[0].extensions.exception.errors) {
-        setErrors(err.graphQLErrors[0].extensions.exception.errors);
-      } else {
         setErrors(err.graphQLErrors[0].extensions.exception.errors);
       }
     }

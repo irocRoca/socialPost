@@ -2,7 +2,7 @@ import React from "react";
 import Post from "../components/Post";
 import Comments from "../components/Comments";
 import { useQuery } from "@apollo/react-hooks";
-import gql from "graphql-tag";
+import { GET_POST } from "../util/graphql/post";
 
 const PostInfo = props => {
   const {
@@ -17,28 +17,11 @@ const PostInfo = props => {
     <div style={{ maxWidth: "600px", margin: "auto" }}>
       {post && (
         <Post data={post}>
-          <Comments data={post.comments} />
+          <Comments data={post.comments} postId={post.id} />
         </Post>
       )}
     </div>
   );
 };
-
-const GET_POST = gql`
-  query getPost($postId: ID!) {
-    getPost(postId: $postId) {
-      id
-      body
-      userName
-      createdAt
-      comments {
-        id
-        body
-        userName
-        createdAt
-      }
-    }
-  }
-`;
 
 export default PostInfo;
