@@ -11,7 +11,7 @@ const genToken = user => {
       id: user.id,
       userName: user.userName
     },
-    JWT_SECRET,
+    process.env.JWT_SECRET,
     { expiresIn: "1hr" }
   );
 };
