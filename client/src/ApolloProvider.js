@@ -7,7 +7,7 @@ import { createHttpLink } from "apollo-link-http";
 import { ApolloProvider } from "@apollo/react-hooks";
 import { setContext } from "apollo-link-context";
 
-const httpLink = createHttpLink({ uri: process.env.APP_URI });
+const httpLink = createHttpLink({ uri: process.env.REACT_APP_URL });
 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem("token");

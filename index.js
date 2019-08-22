@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const express = require("express");
 const typeDefs = require("./graphql/typeDefs");
 const resolvers = require("./graphql/resolvers");
-const { MONGO_URL } = require("./config");
 const path = require("path");
 
 require("dotenv").config();
@@ -15,6 +14,8 @@ const server = new ApolloServer({
   context: ({ req }) => ({ req })
 });
 
+server.applyMiddleware({ app, path: "/graphql" });
+
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "client/build")));
 
@@ -23,10 +24,11 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-server.applyMiddleware({ app, path: "/" });
+const port = process.env.PORT || 5000;
 
-mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true }, () => {
-  console.log("Connected to DB");
-});
-
-app.listen({ port: process.env.PORT || 5000 });
+mongoose
+  .connect(process.env.MONGO_URL, { useNewUrlParser: true }, () => {
+    console.log("Connected to DB");
+  })
+  .then(app.listen({ port }, () => console.log(`server Running on ${port}`)))
+  .catch(err => console.log("failed to start server"));
