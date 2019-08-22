@@ -8,6 +8,7 @@
     "apollo-client": "^2.6.4",
     "apollo-link-context": "^1.0.18",
     "apollo-link-http": "^1.5.15",
+    "apollo-upload-client": "^11.0.0",
     "moment": "^2.24.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",

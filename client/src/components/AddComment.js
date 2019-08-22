@@ -5,14 +5,11 @@ import { useMutation } from "@apollo/react-hooks";
 import { CREATE_COMMENT } from "../util/graphql/post";
 
 const AddComment = ({ id }) => {
-  console.log(id);
   const [value, setValue] = useState("");
-  const [insertComment, { data }] = useMutation(CREATE_COMMENT, {
+  const [insertComment] = useMutation(CREATE_COMMENT, {
     variables: { postId: id, body: value },
     onError: err => console.log(err.graphQLErrors)
   });
-
-  console.log(data);
 
   const handleSubmit = e => {
     e.preventDefault();
