@@ -1,6 +1,5 @@
 const jwt = require("jsonwebtoken");
 const { AuthenticationError } = require("apollo-server");
-const { JWT_SECRET } = require("../config");
 
 module.exports = ({ req }) => {
   const authHeader = req.headers.authorization;
@@ -10,7 +9,7 @@ module.exports = ({ req }) => {
       throw new Error("No Authorization token provided");
     }
     try {
-      const user = jwt.verify(token, JWT_SECRET);
+      const user = jwt.verify(token, process.env.JWT_SECRET);
       return user;
     } catch (err) {
       throw new AuthenticationError("Invalid Token");

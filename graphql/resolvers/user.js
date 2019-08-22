@@ -2,7 +2,6 @@ const User = require("../../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { UserInputError } = require("apollo-server");
-const { JWT_SECRET } = require("../../config");
 const { registerValidate, loginValidate } = require("../../util/validate");
 
 const genToken = user => {
