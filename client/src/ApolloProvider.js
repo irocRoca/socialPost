@@ -7,7 +7,9 @@ import { createUploadLink } from "apollo-upload-client";
 import { ApolloProvider } from "@apollo/react-hooks";
 import { setContext } from "apollo-link-context";
 
-const httpLink = createUploadLink({ uri: process.env.REACT_APP_URL });
+const httpLink = createUploadLink({ uri: "http://localhost:5000/graphql" });
+
+//process.env.REACT_APP_URL
 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem("token");

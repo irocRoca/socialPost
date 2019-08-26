@@ -2,12 +2,13 @@ import React from "react";
 import {
   Grid,
   Segment,
-  Image,
   Form,
   Divider,
   TextArea,
   Button
 } from "semantic-ui-react";
+import { Image } from "cloudinary-react";
+import { Link } from "react-router-dom";
 
 const Profile = () => {
   return (
@@ -19,10 +20,9 @@ const Profile = () => {
             <Divider />
             <div style={{ display: "flex", padding: ".5rem" }}>
               <Image
-                inline
-                avatar
-                size="tiny"
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1wJ90xBHS5VQEdYGHqdyZKpfbCnU2sl_5jFxSlJtOuodsCoVo"
+                cloudName="rocasto"
+                publicId="d2deneiwm0sukahfoajb"
+                width="80"
               />
               <div
                 style={{
@@ -32,7 +32,9 @@ const Profile = () => {
                 }}
               >
                 <h3 style={{ margin: 0 }}>John Doe</h3>
-                <p>change Avatar</p>
+                <Link to="/photo">
+                  <p>change Avatar</p>
+                </Link>
               </div>
             </div>
             <Divider />

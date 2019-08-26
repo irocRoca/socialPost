@@ -22,9 +22,10 @@ const Register = props => {
   const [registerUser, { loading }] = useMutation(REGISTER_USER, {
     update(proxy, result) {
       console.log(result, "result");
-      // Store user Token
-      localStorage.setItem("token", result.data.login.token);
-      props.history.push("/");
+      // TODO: This send me to homepage but doesnt auto sign in find out later
+      // // Store user Token
+      // localStorage.setItem("token", result.data.register.token);
+      props.history.push("/login");
     },
     variables: values,
     onError(err) {

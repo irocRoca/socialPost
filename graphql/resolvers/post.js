@@ -1,4 +1,5 @@
 const Post = require("../../models/Post");
+const User = require("../../models/User");
 const verifyAuth = require("../../util/verifyAuth");
 
 const resolvers = {
@@ -30,8 +31,13 @@ const resolvers = {
       if (body.trim() === "") {
         throw new Error("Body cannot be empty");
       }
+
+      ///Change later by adding user db to context
+      const newUser = await User.findById(user.id);
+
       const newPost = new Post({
         body,
+        photo: newUser.photo,
         userName: user.userName,
         userId: user.id,
         createdAt: new Date().toISOString()

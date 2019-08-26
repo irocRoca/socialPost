@@ -12,7 +12,11 @@ const Home = () => {
   const {
     loading,
     data: { getPosts: posts }
-  } = useQuery(GET_POSTS);
+  } = useQuery(GET_POSTS, {
+    onError: err => {
+      console.log(err.graphQLErrors);
+    }
+  });
 
   return (
     <div>

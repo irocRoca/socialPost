@@ -52,7 +52,6 @@ const AddPost = () => {
           style={{ backgroundColor: "#4d9dd9", color: "white" }}
           name="body"
         >
-          {" "}
           Add Post
         </Button>
       </Form>

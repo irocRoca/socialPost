@@ -1,11 +1,12 @@
+require("dotenv").config();
 const { ApolloServer } = require("apollo-server-express");
+const { graphqlUploadExpress } = require("graphql-upload");
 const mongoose = require("mongoose");
 const express = require("express");
 const typeDefs = require("./graphql/typeDefs");
 const resolvers = require("./graphql/resolvers");
 const path = require("path");
 
-require("dotenv").config();
 const app = express();
 
 const server = new ApolloServer({
@@ -13,6 +14,8 @@ const server = new ApolloServer({
   resolvers,
   context: ({ req }) => ({ req })
 });
+
+// app.use("/graphql", graphqlUploadExpress());
 
 server.applyMiddleware({ app, path: "/graphql" });
 

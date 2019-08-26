@@ -4,6 +4,7 @@ const typeDefs = gql`
   type Post {
     id: ID!
     body: String!
+    photo: String!
     userName: String!
     createdAt: String!
     userId: ID!
@@ -16,6 +17,7 @@ const typeDefs = gql`
   type User {
     id: ID!
     email: String!
+    photo: String
     userName: String!
     token: String!
     createdAt: String!
@@ -24,6 +26,7 @@ const typeDefs = gql`
   type Comment {
     id: ID!
     body: String!
+    photo: String
     userName: String!
     createdAt: String!
   }
@@ -53,6 +56,7 @@ const typeDefs = gql`
     createComment(postId: ID!, body: String!): Post!
     deleteComment(postId: ID!, commentId: ID!): Post!
     likePost(postId: ID!): Post!
+    singleUpload(file: Upload!): String!
   }
 `;
 

@@ -5,12 +5,14 @@ import Login from "./pages/Login";
 import PostInfo from "./pages/PostInfo";
 import reducers from "./reducers";
 import Profile from "./pages/Profile";
+import Photo from "./components/Photo";
 
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import { Container } from "semantic-ui-react";
+import FileUpload from "./components/FileUpload";
 
 const store = createStore(
   reducers,
@@ -29,6 +31,8 @@ const App = () => {
             <Route exact path="/login" component={Login} />
             <Route exact path="/post/:id" component={PostInfo} />
             <Route exact path="/profile/" component={Profile} />
+            <Route exact path="/upload" component={FileUpload} />
+            <Route exact path="/photo" component={Photo} />
           </Switch>
         </Container>
       </Router>
