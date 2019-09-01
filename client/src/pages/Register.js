@@ -13,6 +13,8 @@ import { REGISTER_USER } from "../util/graphql/user";
 const Register = props => {
   const [errors, setErrors] = useState({});
   const [values, setValues] = useState({
+    firstName: "",
+    lastName: "",
     userName: "",
     email: "",
     password: "",
@@ -29,6 +31,8 @@ const Register = props => {
     },
     variables: values,
     onError(err) {
+      console.log(err);
+      console.log(values);
       if (err.graphQLErrors[0].extensions.exception.errors) {
         setErrors(err.graphQLErrors[0].extensions.exception.errors);
       }
@@ -62,22 +66,28 @@ const Register = props => {
             noValidate
             className={loading ? "loading" : ""}
           >
-            {/* <Form.Group widths="equal">
+            <Form.Group widths="equal">
               <Form.Input
                 fluid
                 label="First name"
+                name="firstName"
                 placeholder="First name"
+                onChange={onChange}
+                value={values.firstName}
+                error={errors.firstName && errors.firstName}
                 required
-                // Include error if error
-                // error="First Name Required"
               />
               <Form.Input
                 fluid
                 label="Last name"
+                name="lastName"
                 placeholder="Last name"
+                onChange={onChange}
+                value={values.lastName}
+                error={errors.lastName && errors.lastName}
                 required
               />
-            </Form.Group> */}
+            </Form.Group>
             <Form.Group widths="equal">
               <Form.Input
                 fluid

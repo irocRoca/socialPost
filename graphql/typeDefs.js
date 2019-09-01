@@ -16,6 +16,8 @@ const typeDefs = gql`
 
   type User {
     id: ID!
+    firstName: String!
+    lastName: String!
     email: String!
     photo: String
     userName: String!
@@ -37,6 +39,8 @@ const typeDefs = gql`
   }
 
   input RegisterInput {
+    firstName: String!
+    lastName: String!
     userName: String!
     email: String!
     password: String!
@@ -46,6 +50,7 @@ const typeDefs = gql`
   type Query {
     getPosts: [Post]
     getPost(postId: ID!): Post!
+    getUser(id: ID!): User!
   }
 
   type Mutation {

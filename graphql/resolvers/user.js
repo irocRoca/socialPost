@@ -16,6 +16,13 @@ const genToken = user => {
 };
 
 module.exports = {
+  Query: {
+    getUser: async (_, { id }) => {
+      const user = await User.findById(id).select("-password");
+      return user;
+    }
+  },
+
   Mutation: {
     login: async (_, { userName, password }) => {
       const { isValid, errors } = loginValidate(userName, password);
@@ -44,9 +51,20 @@ module.exports = {
 
     register: async (
       _,
-      { registerInput: { userName, email, password, confirmPassword } }
+      {
+        registerInput: {
+          firstName,
+          lastName,
+          userName,
+          email,
+          password,
+          confirmPassword
+        }
+      }
     ) => {
       const { isValid, errors } = registerValidate(
+        firstName,
+        lastName,
         userName,
         email,
         password,
@@ -65,6 +83,8 @@ module.exports = {
       let hash = bcrypt.hashSync(password, salt);
 
       const newUser = new User({
+        firstName,
+        lastName,
         userName,
         password: hash,
         email,

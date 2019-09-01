@@ -7,12 +7,16 @@ export const USER_LOGIN = gql`
       token
       userName
       email
+      firstName
+      lastName
     }
   }
 `;
 
 export const REGISTER_USER = gql`
   mutation register(
+    $firstName: String!
+    $lastName: String!
     $userName: String!
     $email: String!
     $password: String!
@@ -20,6 +24,8 @@ export const REGISTER_USER = gql`
   ) {
     register(
       registerInput: {
+        firstName: $firstName
+        lastName: $lastName
         userName: $userName
         email: $email
         password: $password
@@ -27,6 +33,8 @@ export const REGISTER_USER = gql`
       }
     ) {
       id
+      firstName
+      lastName
       token
       userName
       email

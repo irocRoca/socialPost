@@ -1,8 +1,11 @@
 import React from "react";
 import { Card, Image, List } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const ProfileInfo = () => {
+  const user = useSelector(state => state.userData);
+  console.log(user);
   return (
     <div>
       <Card>

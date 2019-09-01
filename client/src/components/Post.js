@@ -14,6 +14,11 @@ const Post = props => {
           <Image
             cloudName="rocasto"
             publicId={photo}
+            width="100"
+            height="100"
+            gravity="face"
+            radius="max"
+            crop="fill"
             className="ui massive avatar left floated image"
           />
           {/* <Image

@@ -2,6 +2,8 @@ const validator = require("validator");
 const isEmpty = require("is-empty");
 
 module.exports.registerValidate = (
+  firstName,
+  lastName,
   userName,
   email,
   password,
@@ -9,10 +11,26 @@ module.exports.registerValidate = (
 ) => {
   let errors = {};
 
+  firstName = !isEmpty(firstName) ? firstName : "";
+  lastName = !isEmpty(lastName) ? lastName : "";
   userName = !isEmpty(userName) ? userName : "";
   email = !isEmpty(email) ? email : "";
   password = !isEmpty(password) ? password : "";
   confirmPassword = !isEmpty(confirmPassword) ? confirmPassword : "";
+
+  //First Name
+  if (validator.isEmpty(firstName)) {
+    errors.firstName = "Field is required";
+  } else if (!validator.isLength(firstName, { min: 3 })) {
+    errors.firstName = "First name must be atleast 3 charcters";
+  }
+
+  //Last Name
+  if (validator.isEmpty(lastName)) {
+    errors.lastName = "Field is required";
+  } else if (!validator.isLength(lastName, { min: 3 })) {
+    errors.lastName = "Last name must be atleast 3 charcters";
+  }
 
   //User Name check
   if (validator.isEmpty(userName)) {
@@ -69,3 +87,7 @@ module.exports.loginValidate = (userName, password) => {
     isValid: isEmpty(errors)
   };
 };
+
+// const reg = /([A-Za-z]+("?: [A-Za-z]+)*),? ([A-Za-z]{2})/;
+// const test = 'state, fl'
+// reg.test(test) ? store value in db : else error

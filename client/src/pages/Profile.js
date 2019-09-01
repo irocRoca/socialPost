@@ -9,8 +9,13 @@ import {
 } from "semantic-ui-react";
 import { Image } from "cloudinary-react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useQuery } from "@apollo/react-hooks";
 
 const Profile = () => {
+  const user = useSelector(state => state.userData);
+  // const { loading, error, data } = useQuery(FETCH_USER);
+
   return (
     <div>
       <Grid centered>
