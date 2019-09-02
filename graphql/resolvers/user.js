@@ -2,6 +2,7 @@ const User = require("../../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { UserInputError } = require("apollo-server");
+const verifyAuth = require("../../util/verifyAuth");
 const { registerValidate, loginValidate } = require("../../util/validate");
 
 const genToken = user => {
@@ -24,6 +25,15 @@ module.exports = {
   },
 
   Mutation: {
+    updateUser: async (_, args, context) => {
+      const user = verifyAuth(context);
+      // validate user data
+      const userData = await User.findById(user.id);
+      userData = { ...args };
+      console.log(userData);
+      return userData;
+    },
+
     login: async (_, { userName, password }) => {
       const { isValid, errors } = loginValidate(userName, password);
       if (!isValid) {

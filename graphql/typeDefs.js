@@ -23,6 +23,8 @@ const typeDefs = gql`
     userName: String!
     token: String!
     createdAt: String!
+    bio: String
+    location: String
   }
 
   type Comment {
@@ -54,6 +56,12 @@ const typeDefs = gql`
   }
 
   type Mutation {
+    updateUser(
+      firstName: String!
+      lastName: String!
+      location: String!
+      bio: String!
+    ): User!
     register(registerInput: RegisterInput): User!
     login(userName: String!, password: String!): User!
     createPost(body: String!): Post!

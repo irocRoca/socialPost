@@ -11,8 +11,8 @@ module.exports.registerValidate = (
 ) => {
   let errors = {};
 
-  firstName = !isEmpty(firstName) ? firstName : "";
-  lastName = !isEmpty(lastName) ? lastName : "";
+  firstName = !isEmpty(firstName) ? firstName : ""; // cap
+  lastName = !isEmpty(lastName) ? lastName : ""; // capalize
   userName = !isEmpty(userName) ? userName : "";
   email = !isEmpty(email) ? email : "";
   password = !isEmpty(password) ? password : "";

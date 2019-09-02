@@ -41,3 +41,18 @@ export const REGISTER_USER = gql`
     }
   }
 `;
+
+export const GET_USER = gql`
+  query getUser($id: ID!) {
+    getUser(id: $id) {
+      id
+      firstName
+      lastName
+      email
+      photo
+      userName
+      bio
+      location
+    }
+  }
+`;

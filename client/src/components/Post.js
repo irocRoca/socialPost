@@ -6,6 +6,7 @@ import moment from "moment";
 
 const Post = props => {
   const { body, userName, createdAt, photo } = props.data;
+  console.log(props.data);
   return (
     <Grid.Row>
       <Card fluid style={{ width: "100%", marginBottom: "1rem" }}>
@@ -28,7 +29,7 @@ const Post = props => {
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1wJ90xBHS5VQEdYGHqdyZKpfbCnU2sl_5jFxSlJtOuodsCoVo"
           /> */}
           <Card.Header>John Doe</Card.Header>
-          <Card.Meta>@{userName}</Card.Meta>
+          <Card.Meta>{`@ ${userName}`}</Card.Meta>
           <Card.Meta>{moment(createdAt).fromNow()}</Card.Meta>
           <Card.Description style={{ fontSize: "1.18rem" }}>
             {body}

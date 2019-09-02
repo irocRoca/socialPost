@@ -8,8 +8,8 @@ const userSchema = mongoose.Schema({
   photo: { type: String, default: "d2deneiwm0sukahfoajb" },
   password: String,
   createdAt: String,
-  bio: String,
-  location: String
+  bio: { type: String, default: "Bio about myself" },
+  location: { type: String, default: "" }
 });
 
 module.exports = mongoose.model("user", userSchema);

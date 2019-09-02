@@ -20,17 +20,21 @@ const Home = () => {
 
   return (
     <div>
-      <Grid centered className={loading ? "loading" : ""}>
-        <Grid.Row>
-          <Grid.Column only="computer" computer={5}>
-            <ProfileInfo />
-          </Grid.Column>
-          <Grid.Column mobile={16} tablet={12} computer={7}>
-            <Grid.Row>{user && <AddPost />}</Grid.Row>
-            {posts && posts.map(item => <Post data={item} key={item.id} />)}
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+      {posts ? (
+        <Grid centered className={loading ? "loading" : ""}>
+          <Grid.Row>
+            <Grid.Column only="computer" computer={5}>
+              {user && <ProfileInfo />}
+            </Grid.Column>
+            <Grid.Column mobile={16} tablet={12} computer={7}>
+              <Grid.Row>{user && <AddPost />}</Grid.Row>
+              {posts && posts.map(item => <Post data={item} key={item.id} />)}
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      ) : (
+        <h1>Loading...</h1>
+      )}
     </div>
   );
 };
