@@ -6,6 +6,8 @@ export const GET_POSTS = gql`
       id
       body
       userName
+      firstName
+      lastName
       photo
       createdAt
       likeCount
@@ -24,7 +26,10 @@ export const CREATE_POST = gql`
       id
       body
       photo
+      firstName
+      lastName
       userName
+      userId
       createdAt
       likeCount
       commentCount
@@ -42,6 +47,7 @@ export const GET_POST = gql`
       id
       body
       userName
+      photo
       createdAt
       comments {
         id

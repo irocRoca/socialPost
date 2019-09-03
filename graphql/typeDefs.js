@@ -5,6 +5,8 @@ const typeDefs = gql`
     id: ID!
     body: String!
     photo: String!
+    firstName: String
+    lastName: String
     userName: String!
     createdAt: String!
     userId: ID!

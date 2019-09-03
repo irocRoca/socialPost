@@ -28,10 +28,10 @@ module.exports = {
     updateUser: async (_, args, context) => {
       const user = verifyAuth(context);
       // validate user data
-      const userData = await User.findById(user.id);
-      userData = { ...args };
-      console.log(userData);
-      return userData;
+      const updatedUser = await User.findByIdAndUpdate(user.id, {
+        ...args
+      }).select("-password");
+      return updatedUser;
     },
 
     login: async (_, { userName, password }) => {

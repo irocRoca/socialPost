@@ -1,19 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Grid,
   Segment,
   Form,
   Divider,
   TextArea,
-  Button
+  Button,
+  Message,
+  Transition
 } from "semantic-ui-react";
 import { Image } from "cloudinary-react";
-import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { GET_USER } from "../util/graphql/user";
-import { useQuery } from "@apollo/react-hooks";
+import { GET_USER, UPDATE_USER_INFO } from "../util/graphql/user";
+import { GET_POSTS } from "../util/graphql/post";
+import { useQuery, useMutation } from "@apollo/react-hooks";
+
+import FileUpload from "../components/FileUpload";
 
 const Profile = () => {
+  // Push out of here if not logged in
+  const [updated, setUpdated] = useState(false);
+  const [updatedPhoto, setPhoto] = useState("");
   const userData = useSelector(state => state.userData);
   const [value, setValue] = useState({
     firstName: "",
@@ -22,19 +29,46 @@ const Profile = () => {
     email: "",
     bio: ""
   });
+
   const {
-    loading,
     data: { getUser: user }
   } = useQuery(GET_USER, {
     variables: { id: userData.id },
     onCompleted: () => {
       setValue({
-        firstName: user.firstName,
-        lastName: user.lastName,
-        location: user.location,
-        email: user.email,
-        bio: user.bio
+        ...user
       });
+      setPhoto(user.photo);
+    }
+  });
+
+  const [updateUserInfo] = useMutation(UPDATE_USER_INFO, {
+    variables: { ...value },
+    // update: (proxy, { data: { updateUser: updatedUser } }) => {
+    //   try {
+    //     const posts = proxy.readQuery({ query: GET_POSTS });
+    //     console.log(updatedUser);
+    //     let newPosts = posts.getPosts.filter(
+    //       post => post.userId !== userData.id
+    //     );
+    //     newPosts.map(item => {
+    //       console.log(item);
+    //       console.log(updatedPhoto);
+    //       return (
+    //         (item.firstName = updatedUser.firstName),
+    //         (item.lastName = updatedUser.lastName),
+    //         (item.photo = updatedPhoto)
+    //       );
+    //     });
+    //     newPosts = { ...posts.getPosts, ...newPosts };
+    //     console.log(newPosts);
+    //     proxy.writeQuery({ query: GET_POSTS, newPosts });
+    //   } catch (err) {
+    //     throw new Error(err);
+    //   }
+    // },
+    onCompleted: () => {
+      setUpdated(true);
     }
   });
 
@@ -42,11 +76,24 @@ const Profile = () => {
     setValue({ ...value, [e.target.name]: e.target.value });
   };
 
+  const onSubmit = e => {
+    e.preventDefault();
+    updateUserInfo();
+  };
+
   return (
     <div>
       {user ? (
         <Grid centered>
-          <Grid.Column width={12}>
+          <Grid.Column width={16}>
+            <Transition visible={updated} animation="scale" duration="700">
+              <Message
+                success
+                header="Success"
+                content="User information updated."
+              />
+            </Transition>
+
             <Segment>
               <h4>Account Details</h4>
               <Divider />
@@ -59,6 +106,7 @@ const Profile = () => {
                   width="100"
                   height="100"
                 />
+
                 <div
                   style={{
                     flexDirection: "column",
@@ -69,14 +117,13 @@ const Profile = () => {
                   <h3
                     style={{ margin: 0 }}
                   >{`${user.firstName} ${user.lastName}`}</h3>
-                  <Link to="/photo">
-                    <p>change Avatar</p>
-                  </Link>
+
+                  <FileUpload userId={user.id} photoId={setPhoto} />
                 </div>
               </div>
               <Divider />
               <h4>Personal Information</h4>
-              <Form>
+              <Form onSubmit={onSubmit}>
                 <Form.Group widths="equal">
                   <Form.Input
                     fluid

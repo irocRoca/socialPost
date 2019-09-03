@@ -56,3 +56,26 @@ export const GET_USER = gql`
     }
   }
 `;
+
+export const UPDATE_USER_INFO = gql`
+  mutation updateUser(
+    $firstName: String!
+    $lastName: String!
+    $location: String!
+    $bio: String!
+  ) {
+    updateUser(
+      firstName: $firstName
+      lastName: $lastName
+      location: $location
+      bio: $bio
+    ) {
+      id
+      firstName
+      lastName
+      bio
+      location
+      photo
+    }
+  }
+`;

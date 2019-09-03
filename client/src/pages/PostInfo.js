@@ -16,7 +16,7 @@ const PostInfo = props => {
   return (
     <div style={{ maxWidth: "600px", margin: "auto" }}>
       {post && (
-        <Post data={post}>
+        <Post data={post} singleP="true">
           <Comments data={post.comments} postId={post.id} />
         </Post>
       )}

@@ -38,6 +38,8 @@ const resolvers = {
       const newPost = new Post({
         body,
         photo: newUser.photo,
+        firstName: newUser.firstName,
+        lastName: newUser.lastName,
         userName: user.userName,
         userId: user.id,
         createdAt: new Date().toISOString()

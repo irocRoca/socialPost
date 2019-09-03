@@ -5,7 +5,6 @@ import AddComment from "../components/AddComment";
 
 const Comments = props => {
   const dataList = props.data;
-
   // dataList <= 0 ? null :
   const list = (
     <div style={{ padding: " 1rem 2rem" }}>

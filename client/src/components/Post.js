@@ -6,21 +6,25 @@ import moment from "moment";
 
 const Post = props => {
   const { body, userName, createdAt, photo } = props.data;
-  console.log(props.data);
   return (
     <Grid.Row>
       <Card fluid style={{ width: "100%", marginBottom: "1rem" }}>
         <Card.Content>
           {/* Change public id to photo from props */}
+
           <Image
             cloudName="rocasto"
             publicId={photo}
-            width="100"
-            height="100"
+            width="70"
+            height="70"
             gravity="face"
             radius="max"
             crop="fill"
-            className="ui massive avatar left floated image"
+            className={
+              props.singleP
+                ? "ui left floated image"
+                : "ui massive avatar left floated image"
+            }
           />
           {/* <Image
             floated="left"
@@ -31,7 +35,7 @@ const Post = props => {
           <Card.Header>John Doe</Card.Header>
           <Card.Meta>{`@ ${userName}`}</Card.Meta>
           <Card.Meta>{moment(createdAt).fromNow()}</Card.Meta>
-          <Card.Description style={{ fontSize: "1.18rem" }}>
+          <Card.Description style={{ fontSize: "1.18rem", padding: ".6rem" }}>
             {body}
           </Card.Description>
         </Card.Content>
